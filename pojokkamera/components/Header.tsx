@@ -1,4 +1,6 @@
 // components/Header.tsx
+import { webRoute } from "@/route/web_route";
+import Link from "next/link";
 import { useState } from "react";
 import { FaShoppingBag, FaUser, FaSearch, FaBars, FaTimes } from "react-icons/fa";
 
@@ -10,9 +12,11 @@ export default function Header() {
     return (
         <header className="w-full bg-white dark:bg-black shadow-sm px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-50 relative">
             {/* Logo */}
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white z-10">
-                PojokKamera
-            </h1>
+            <Link href={webRoute.home} className="flex items-center gap-2">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white z-10">
+                    PojokKamera
+                </h1>
+            </Link>
 
             {/* Search Field (centered, desktop only) */}
             <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex flex-1 max-w-lg px-4">

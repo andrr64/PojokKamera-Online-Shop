@@ -1,4 +1,5 @@
 import ProductItem from "@/components/cards/ProductItem";
+import Section from "@/components/Section";
 
 export default function RekomendasiKameraSection() {
     const products = [
@@ -29,7 +30,7 @@ export default function RekomendasiKameraSection() {
     ];
 
     return (
-        <section className="bg-white px-4 sm:px-6 lg:px-8 py-16">
+        <Section className="px-4 sm:px-6 lg:px-8 py-16">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center sm:text-left">
                     Rekomendasi Kamera
@@ -41,6 +42,6 @@ export default function RekomendasiKameraSection() {
                     ))}
                 </div>
             </div>
-        </section>
+        </Section>
     );
 }

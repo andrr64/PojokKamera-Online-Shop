@@ -1,5 +1,6 @@
 // components/BestReviewSection.tsx
 import BestReviewItem from "@/components/cards/BestReviewItem";
+import Section from "@/components/Section";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 
 export default function BestReviewSection() {
@@ -43,7 +44,7 @@ export default function BestReviewSection() {
   ];
 
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <Section className="py-16 px-4 bg-gray-50">
       <header className="max-w-4xl text-center mb-12 mx-auto px-4">
         <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
           Apa Yang <span className="text-green-500">Pelanggan Kami Katakan</span>
@@ -58,6 +59,6 @@ export default function BestReviewSection() {
           <BestReviewItem key={i} {...r} />
         ))}
       </div>
-    </section>
+    </Section>
   );
 }

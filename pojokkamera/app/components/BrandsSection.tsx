@@ -1,3 +1,5 @@
+import Section from "@/components/Section";
+
 // components/BrandsSection.tsx
 export default function BrandsSection() {
     const brands = [
@@ -10,7 +12,7 @@ export default function BrandsSection() {
     ];
 
     return (
-        <section className="py-12 bg-white">
+        <Section className="py-12 bg-white">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center sm:text-center">
                 Merek 
             </h2>
@@ -24,6 +26,6 @@ export default function BrandsSection() {
                     />
                 ))}
             </div>
-        </section>
+        </Section>
     );
 }

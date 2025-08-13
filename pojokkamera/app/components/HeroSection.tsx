@@ -1,8 +1,9 @@
+import Section from "@/components/Section";
+
 // components/HeroSection.tsx
 export default function HeroSection() {
     return (
-        <section className="bg-white mx-auto px-6 py-16 flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
-            {/* Text Content */}
+        <Section className="mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
             <div className="flex flex-col items-center md:items-start w-full md:max-w-xl text-center md:text-left">
                 <p className="text-red-500 text-sm font-medium mb-2">
                     Koleksi Terbaru
@@ -42,6 +43,6 @@ export default function HeroSection() {
                 <div className="absolute bottom-12 left-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800" />
                 <div className="absolute top-6 right-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-red-500" />
             </div>
-        </section>
+        </Section>
     );
 }
