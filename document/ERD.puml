@@ -1,0 +1,82 @@
+@startuml
+' Definisikan entitas
+entity "Pengguna" as Pengguna {
+    +pengguna_id : bigint [PK]
+    username : varchar
+    email : varchar
+    password : varchar
+    peran : enum('pelanggan','admin')
+    dibuat_pada : datetime
+    diperbarui_pada : datetime
+}
+
+entity "Alamat" as Alamat {
+    +alamat_id : bigint [PK]
+    pengguna_id : bigint [FK]
+    label : varchar
+    jalan : varchar
+    kota : varchar
+    provinsi : varchar
+    kode_pos : varchar
+    negara : varchar
+    dibuat_pada : datetime
+    diperbarui_pada : datetime
+}
+
+entity "Merek" as Merek {
+    +merek_id : bigint [PK]
+    nama : varchar
+    deskripsi : text
+    dibuat_pada : datetime
+    diperbarui_pada : datetime
+}
+
+entity "Produk" as Produk {
+    +produk_id : bigint [PK]
+    nama : varchar
+    deskripsi : text
+    harga : decimal
+    stok : int
+    merek_id : bigint [FK]
+    dibuat_pada : datetime
+    diperbarui_pada : datetime
+}
+
+entity "Ulasan" as Ulasan {
+    +ulasan_id : bigint [PK]
+    produk_id : bigint [FK]
+    pengguna_id : bigint [FK]
+    bintang : int
+    komentar : text
+    foto : array<string>
+    dibuat_pada : datetime
+}
+
+entity "Pesanan" as Pesanan {
+    +pesanan_id : bigint [PK]
+    pengguna_id : bigint [FK]
+    alamat_id : bigint [FK]
+    total_harga : decimal
+    status : enum('pending','dibayar','dikirim','selesai','dibatalkan')
+    dibuat_pada : datetime
+    diperbarui_pada : datetime
+}
+
+entity "ItemPesanan" as ItemPesanan {
+    +item_pesanan_id : bigint [PK]
+    pesanan_id : bigint [FK]
+    produk_id : bigint [FK]
+    jumlah : int
+    harga : decimal
+}
+
+' Relasi antar entitas
+Pengguna ||--o{ Alamat : memiliki
+Pengguna ||--o{ Ulasan : menulis
+Pengguna ||--o{ Pesanan : memesan
+Merek ||--o{ Produk : memiliki
+Produk ||--o{ Ulasan : menerima
+Pesanan ||--o{ ItemPesanan : berisi
+Produk ||--o{ ItemPesanan : termasuk_dalam
+Alamat ||--o{ Pesanan : alamat_pengiriman
+@enduml
