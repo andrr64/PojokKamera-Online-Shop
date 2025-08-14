@@ -6,3 +6,4 @@ from .produk import Produk
 from .kategori import Kategori
 from .merek import Merek
 from .ulasan import Ulasan
+from .product_images import ProductImages

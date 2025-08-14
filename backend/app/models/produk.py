@@ -27,6 +27,7 @@ class Produk(Base):
     merek = relationship("Merek", back_populates="produk")
     ulasan = relationship("Ulasan", back_populates="produk", cascade="all, delete-orphan")
     item_pesanan = relationship("ItemPesanan", back_populates="produk", cascade="all, delete-orphan")
+    images = relationship("ProductImages", back_populates="produk", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Produk(id={self.produk_id}, nama='{self.nama}', harga={self.harga})>"
