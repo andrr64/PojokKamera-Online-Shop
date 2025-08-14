@@ -1,3 +1,5 @@
+'use client';
+
 // components/Header.tsx
 import { webRoute } from "@/route/web_route";
 import Link from "next/link";
@@ -6,8 +8,8 @@ import { FaShoppingBag, FaUser, FaSearch, FaBars, FaTimes } from "react-icons/fa
 
 export default function Header() {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [isLoggedIn, setLoggedIn] = useState(false); // dummy login state
-    const userName = "Andreas"; // dummy user name
+    const [isLoggedIn, setLoggedIn] = useState(false); 
+    const userName = "Andreas"; 
 
     return (
         <header className="w-full bg-white dark:bg-black shadow-sm px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-50 relative">
@@ -30,13 +32,13 @@ export default function Header() {
             {/* Desktop Right Menu */}
             <div className="hidden md:flex items-center gap-4 md:gap-6 z-10">
                 {!isLoggedIn ? (
-                    <button
+                    <a
+                        href={webRoute.login}
                         className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
-                        onClick={() => setLoggedIn(true)} // toggle dummy login
                     >
                         <FaUser />
                         Login
-                    </button>
+                    </a>
                 ) : (
                     <>
                         <span className="text-gray-700 dark:text-gray-300 font-medium">
