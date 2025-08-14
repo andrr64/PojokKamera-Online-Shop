@@ -7,10 +7,9 @@ from fastapi.exceptions import RequestValidationError
 from app.models import *
 from fastapi.responses import JSONResponse
 from app.schemas.response import ResponseModel
+from app.api.v1 import produk as produk_router
 
 Base.metadata.create_all(bind=engine)
-print("✅ Semua tabel berhasil dibuat (atau sudah ada)\n")
-
 app = FastAPI(title="My API", version="1.0")
 
 @app.exception_handler(RequestValidationError)
@@ -32,6 +31,7 @@ app.add_middleware(
 
 
 app.include_router(users_router, prefix="/api/v1/user", tags=["user"])
+app.include_router(produk_router.router, prefix="/api/v1/produk", tags=["produk"])
 
 print("Backend on localhost:8000\n")
 
