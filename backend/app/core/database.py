@@ -4,6 +4,9 @@ from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 from sqlalchemy.ext.declarative import declarative_base  # ← Tambahkan ini
 
+
+Base = declarative_base()
+
 # Buat engine dari DATABASE_URL dari .env
 engine = create_engine(
     settings.DATABASE_URL,
@@ -14,7 +17,6 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # ✅ Tambahkan baris ini:
-Base = declarative_base()
 
 def get_db():
     """Dependency untuk FastAPI: inject session ke route"""

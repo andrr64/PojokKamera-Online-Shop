@@ -31,16 +31,26 @@ entity "Merek" as Merek {
     diperbarui_pada : datetime
 }
 
+entity "Kategori" as Kategori {
+    +kategori_id : bigint [PK]
+    nama : varchar(50) [unique]
+    deskripsi : text
+    dibuat_pada : datetime
+    diperbarui_pada : datetime
+}
+
 entity "Produk" as Produk {
     +produk_id : bigint [PK]
     nama : varchar
     deskripsi : text
     harga : decimal
     stok : int
+    kategori_id : bigint [FK]  ← foreign key ke Kategori
     merek_id : bigint [FK]
     dibuat_pada : datetime
     diperbarui_pada : datetime
 }
+
 
 entity "Ulasan" as Ulasan {
     +ulasan_id : bigint [PK]
@@ -79,4 +89,5 @@ Produk ||--o{ Ulasan : menerima
 Pesanan ||--o{ ItemPesanan : berisi
 Produk ||--o{ ItemPesanan : termasuk_dalam
 Alamat ||--o{ Pesanan : alamat_pengiriman
+Kategori ||--o{ Produk : "memiliki → produk"
 @enduml
