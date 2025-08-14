@@ -23,8 +23,11 @@ class User(Base):
         nullable=False
     )
     
+    # Relasi
     alamat = relationship("Alamat", back_populates="pengguna", cascade="all, delete-orphan")
-
+    pesanan = relationship("Pesanan", back_populates="pengguna", cascade="all, delete-orphan")
+    ulasan = relationship("Ulasan", back_populates="pengguna", cascade="all, delete-orphan")
+    
     # Representasi untuk debugging
     def __repr__(self):
         return f"<User(id={self.pengguna_id}, username='{self.username}', email='{self.email}', role='{self.peran}')>"

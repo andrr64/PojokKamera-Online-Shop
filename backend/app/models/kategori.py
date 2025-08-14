@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from sqlalchemy.sql import func
 from app.core.database import Base
-
+from sqlalchemy.orm import relationship
 
 class Kategori(Base):
     __tablename__ = "kategori"
@@ -18,5 +18,6 @@ class Kategori(Base):
         nullable=False
     )
 
+    produk = relationship("Produk", back_populates="kategori", cascade="all, delete-orphan")
     def __repr__(self):
         return f"<Kategori(id={self.kategori_id}, nama='{self.nama}')>"
