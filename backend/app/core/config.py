@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # JWT
     SECRET_KEY: str = Field(..., description="Secret key for JWT")
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_HOUR: int = Field(..., description="Access token expiration time in hours")
 
     class Config:
         env_file = ".env"

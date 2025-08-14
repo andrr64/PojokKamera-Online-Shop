@@ -35,9 +35,6 @@ def create_user(db: Session, user: UserCreate) -> User:
         db.rollback()
         raise IntegrityException(str(e))
 
-def get_user(db: Session, user_id: int) -> User | None:
-    return db.query(User).filter(User.pengguna_id == user_id).first()
-
 def update_user(db: Session, db_user: User, updates: UserUpdate) -> User:
     try:
         if updates.username is not None:
@@ -66,6 +63,8 @@ def delete_user(db: Session, db_user: User):
         db.rollback()
         raise IntegrityException(str(e))
 
+def get_user_by_email(db: Session, email: str) -> User | None:
+    return db.query(User).filter(User.email == email).first()
 
 # -------------------
 # CRUD admin (user-admin)

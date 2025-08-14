@@ -2,7 +2,6 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime
 
-
 class UserRole:
     USER = "user"
     ADMIN = "admin"
@@ -39,3 +38,7 @@ class UserUpdate(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
     password: Optional[str] = None
+    
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

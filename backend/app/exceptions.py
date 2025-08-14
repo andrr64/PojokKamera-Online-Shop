@@ -6,3 +6,7 @@ class IntegrityException(Exception):
 class DuplicateException(Exception):
     """Raised when an attempt is made to create a duplicate entry"""
     pass
+
+class  AuthenticationException(Exception):
+    """Raised when authentication fails (e.g., invalid email/password)"""
+    pass
