@@ -14,7 +14,8 @@ class Settings(BaseSettings):
     SECRET_KEY: str = Field(..., description="Secret key for JWT")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_HOUR: int = Field(..., description="Access token expiration time in hours")
-
+    CLOUDINARY_KEY: str = Field(..., description="Cloudinary API key")
+    
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

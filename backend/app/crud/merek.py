@@ -24,6 +24,15 @@ class MerekCRUD:
         db.refresh(db_merek)  # refresh harus model ORM
         return db_merek
 
+
+    @staticmethod
+    def get_all_merek(db: Session):
+        return db.query(Merek).all()
+    
+    @staticmethod
+    def get_merek_by_id(db: Session, merek_id: int) -> Merek | None:
+        return db.query(Merek).filter(Merek.merek_id == merek_id).first()   
+    
     @staticmethod
     def update_merek(db: Session, merek_id: int, merek_data: MerekCreate) -> Merek:
         # cari merek berdasarkan ID

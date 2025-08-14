@@ -5,6 +5,7 @@ pydantic-settings===2.10.1
 psycopg2===2.9.10
 alembic===1.16.4
 pydantic[email]
-passlib
+passlib===1.7.4
 python-jose[cryptography]
-python-multipart
+python-multipart===0.0.20
+cloudinary===1.44.1

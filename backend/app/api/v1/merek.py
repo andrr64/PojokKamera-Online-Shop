@@ -1,9 +1,10 @@
 # app/api/v1/merek.py
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Query
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.schemas.response import ResponseModel
 from app.services.merek import MerekService
+from app.schemas.merek import MerekRead
 from fastapi import APIRouter, UploadFile, File, Form, Depends
 
 router = APIRouter()
@@ -32,8 +33,7 @@ def create_merek(
             detail="Terjadi kesalahan internal"
         )
 
-
-@router.put("/update/{merek_id}", response_model=ResponseModel)
+@router.put("/update/{merek_id}", response_model=ResponseModel, status_code=status.HTTP_200_OK)
 def update_merek(
     merek_id: int,
     nama: str | None = Form(None),
@@ -56,6 +56,38 @@ def update_merek(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
+        )
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Terjadi kesalahan internal"
+        )
+
+@router.get("/get", response_model=ResponseModel, status_code=status.HTTP_200_OK)
+def get_all_merek(
+    merek_id: int | None = Query(None, description="ID merek, jika ingin ambil spesifik"),
+    db: Session = Depends(get_db)
+):
+    try:
+        if merek_id is not None:
+            # Ambil satu merek berdasarkan ID
+            merek = MerekService.read_merek_by_id(db=db, merek_id=merek_id)
+            data = MerekRead.model_validate(merek)
+        else:
+            # Ambil semua merek
+            merek_list = MerekService.read_all_merek(db=db)
+            data = [MerekRead.model_validate(m) for m in merek_list]
+
+        return ResponseModel(
+            detail="Data merek berhasil diambil",
+            data=data
+        )
+    except ValueError as ve:
+        # Misal data tidak ditemukan
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(ve)
         )
     except Exception as e:
         print(str(e))
