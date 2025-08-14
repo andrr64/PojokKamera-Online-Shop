@@ -2,9 +2,9 @@
 from pydantic import BaseModel
 
 class MerekCreate(BaseModel):
-    nama: str
-    deskripsi: str
-    logo: str 
+    nama: str | None
+    deskripsi: str |  None
+    logo: str | None
     
     class Config:
         orm_mode = True
