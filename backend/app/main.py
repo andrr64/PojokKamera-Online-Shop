@@ -1,7 +1,6 @@
 # app/main.py
 from fastapi import FastAPI, Request
 from app.api.v1.user import router as users_router
-from app.api.v1.auth import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import Base, engine
 from fastapi.exceptions import RequestValidationError
@@ -32,7 +31,7 @@ app.add_middleware(
 )
 
 
-app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(users_router, prefix="/api/v1/user", tags=["user"])
 
 print("Backend on localhost:8000\n")
 

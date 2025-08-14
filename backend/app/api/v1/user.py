@@ -1,22 +1,20 @@
-# app/api/v1/auth.py
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+# app/api/v1/user.py
+from fastapi import APIRouter, Depends, HTTPException, status, Response
 from sqlalchemy.orm import Session
-from app.schemas.auth import LoginRequest
+from app.schemas.user import UserLogin, UserRegister
+from app.schemas.response import ResponseModel
 from app.utils.jwt import create_access_token
 from app.core.config import settings
-from app.services.auth import login_user
 from app.core.database import get_db
-from app.exceptions import AuthenticationException
+from app.services.user import login_user, register_user
+from app.exceptions import AuthenticationException, IntegrityException, DuplicateException
 
 router = APIRouter()
 
-@router.post("/login", status_code=status.HTTP_200_OK)
-def login(req: LoginRequest, response: Response, db: Session = Depends(get_db)):
+@router.post("/login", response_model=ResponseModel)
+def login(req: UserLogin, response: Response, db: Session = Depends(get_db)):
     try:
-        # Verifikasi user & password
         user = login_user(db, req)
-
-        # Buat JWT token
         token = create_access_token(data={"sub": user.email})
 
         # Set cookie HTTP-only
@@ -24,12 +22,14 @@ def login(req: LoginRequest, response: Response, db: Session = Depends(get_db)):
             key="access_token",
             value=token,
             httponly=True,
-            secure=True,       # aktifkan kalau HTTPS
+            secure=False,       # aktifkan kalau HTTPS
             samesite="strict", # cegah CSRF
             max_age=settings.ACCESS_TOKEN_EXPIRE_HOUR * 3600
         )
 
-        return {"message": "Login berhasil"}
+        return ResponseModel(
+            detail="Login berhasil"
+        )
 
     except AuthenticationException as e:
         raise HTTPException(
@@ -39,5 +39,30 @@ def login(req: LoginRequest, response: Response, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Terjadi kesalahan internal."
+            detail=f"Terjadi kesalahan internal: {str(e)}"
+        )
+
+@router.post("/register", response_model=ResponseModel, status_code=status.HTTP_201_CREATED)
+def register(body: UserRegister, db: Session = Depends(get_db)):
+    try:
+        user = register_user(db, body)
+        return ResponseModel(
+            detail="Registrasi berhasil",
+            data={"email": user.email, "username": user.username}
+        )
+
+    except IntegrityException:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username atau email tidak valid"
+        )
+    except DuplicateException:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Username atau email sudah digunakan"
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Terjadi kesalahan internal: {str(e)}"
         )
