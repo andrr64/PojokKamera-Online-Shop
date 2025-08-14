@@ -10,6 +10,7 @@ class Merek(Base):
     merek_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nama = Column(String, unique=True, nullable=False, index=True)
     deskripsi = Column(Text, nullable=True)
+    logo = Column(String, nullable=False)
     dibuat_pada = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     diperbarui_pada = Column(
         DateTime(timezone=True),
