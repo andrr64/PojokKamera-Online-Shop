@@ -7,24 +7,25 @@ from app.services.merek import tambah_merek
 from fastapi import APIRouter, UploadFile, File, Form, Depends
 router = APIRouter()
 
-@router.post("/", response_model=ResponseModel, status_code=status.HTTP_201_CREATED)
+@router.post("/create", response_model=ResponseModel, status_code=status.HTTP_201_CREATED)
 def create_merek(
     nama: str = Form(...),
-    deskripsi: str = Form(None),
+    deskripsi: str = Form(...),
     logo_file: UploadFile = File(None),
     db: Session = Depends(get_db)
 ):
     try:
-        tambah_merek(nama, deskripsi, logo_file, db)
+        tambah_merek(nama=nama, deskripsi=deskripsi, logo_file=logo_file, db=db)
         return ResponseModel(
-            message="Merek berhasil ditambahkan"
+            detail="Merek berhasil ditambahkan"
         )
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e)
         )
-    except Exception:
+    except Exception as e:
+        print(str(e))
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Terjadi kesalahan internal"
