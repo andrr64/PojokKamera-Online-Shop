@@ -10,3 +10,7 @@ class DuplicateException(Exception):
 class  AuthenticationException(Exception):
     """Raised when authentication fails (e.g., invalid email/password)"""
     pass
+
+class NotFoundException(Exception):
+    """Raised when a requested resource is not found"""
+    pass
