@@ -7,3 +7,11 @@ class KategoriCreate(BaseModel):
     
     class Config:
         orm_mode = True
+
+class KategoriResponse(BaseModel):
+    kategori_id: int
+    nama: str
+
+    model_config = {
+        "from_attributes": True,
+    }
