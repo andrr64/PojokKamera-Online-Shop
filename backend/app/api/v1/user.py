@@ -15,7 +15,7 @@ router = APIRouter()
 def login(req: UserLogin, response: Response, db: Session = Depends(get_db)):
     try:
         user = login_user(db, req)
-        token = create_access_token(data={"sub": user.email})
+        token = create_access_token(data={"sub": str(user.pengguna_id)})
 
         # Set cookie HTTP-only
         response.set_cookie(

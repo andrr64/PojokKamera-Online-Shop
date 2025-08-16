@@ -27,9 +27,10 @@ def tambah_alamat(
 @router.get("/get-all", response_model=List[AlamatResponse])
 def list_alamat(
     db: Session = Depends(get_db),
-    user: dict = Depends(get_current_user)
+    user: str = Depends(get_current_user)
 ):
-    return AlamatService.get_daftar_alamat(db, user)
+    user_id = user.get("sub")
+    return AlamatService.get_daftar_alamat(db, user_id)
 
 
 # READ ONE

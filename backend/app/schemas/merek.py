@@ -10,6 +10,7 @@ class MerekRead(BaseModel):
     nama: str
     deskripsi: str
     logo: str
+    merek_id: int
 
     model_config = {
         "from_attributes": True,

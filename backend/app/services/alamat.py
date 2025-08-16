@@ -22,9 +22,8 @@ class AlamatService:
         return AlamatResponse.model_validate(alamat)
 
     @staticmethod
-    def get_daftar_alamat(db: Session, user: dict):
-        user_email = user.get("sub")
-        pengguna = UserCRUD.get_by_email(db, user_email)
+    def get_daftar_alamat(db: Session, user_id: str):
+        pengguna = UserCRUD.get_by_id(db, user_id)
         if not pengguna:
             raise HTTPException(status_code=404, detail="Pengguna tidak ditemukan")
 

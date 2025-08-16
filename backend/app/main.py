@@ -33,15 +33,21 @@ from app.api.v1 import user as users_router
 from app.api.v1 import produk as produk_router
 from app.api.v1 import kategori as kategori_router
 from app.api.v1 import alamat as alamat_router
+from app.api.v1 import pesanan as pesanan_router
 
 app.include_router(merek_router.router, prefix="/api/v1/merek", tags=["merek"])
 app.include_router(users_router.router, prefix="/api/v1/user", tags=["user"])
 app.include_router(produk_router.router, prefix="/api/v1/produk", tags=["produk"])
 app.include_router(kategori_router.router, prefix="/api/v1/kategori", tags=["kategori"])
 app.include_router(alamat_router.router, prefix="/api/v1/alamat", tags=["alamat"])
+app.include_router(pesanan_router.router, prefix="/api/v1/pesanan", tags=["pesanan"]) 
 
+import os
+
+os.system("cls")
+print("PojokKamera 1.0\n")
 print("Backend on localhost:8000\n")
-
+print("-"*10)
 @app.get("/")
 def read_root():
     return {"message": "Welcome to FastAPI!"}

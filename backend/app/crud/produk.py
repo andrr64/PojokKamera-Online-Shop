@@ -89,7 +89,23 @@ class ProdukCRUD:
             .filter(Produk.produk_id == produk_id)
             .first()
         )
-        if not produk:
+        if not produk:  
             from app.exceptions import NotFoundException
             raise NotFoundException(f"Produk dengan ID {produk_id} tidak ditemukan")
         return produk
+  
+    @staticmethod
+    def is_stok_ok(db: Session, produk_ids: list[int], stoks: list[int]) -> bool:
+        """
+        Cek apakah stok produk cukup untuk list produk & jumlah yang diminta.
+        Return False jika ada salah satu yang stoknya tidak cukup.
+        """
+        if len(produk_ids) != len(stoks):
+            raise ValueError("produk_ids dan stoks harus punya panjang yang sama")
+
+        for produk_id, jumlah in zip(produk_ids, stoks):
+            produk = db.query(Produk).filter(Produk.produk_id == produk_id).first()
+            if not produk or produk.stok < jumlah:
+                return False
+        
+        return True
