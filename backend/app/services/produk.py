@@ -8,6 +8,15 @@ from app.crud.product_images import ProductImagesCRUD
 
 class ProdukService:
     @staticmethod
+    def get_product_by_id(db: Session, produk_id: int) -> ProdukCreateResponse:
+        produk = ProdukCRUD.read_by_id(db, produk_id)
+        if not produk:
+            from app.exceptions import NotFoundException
+            raise NotFoundException(f"Produk dengan ID {produk_id} tidak ditemukan")
+
+        return ProdukCreateResponse.model_validate(produk)
+    
+    @staticmethod
     def get_product_card(
         db: Session,
         keyword: Optional[str] = None,

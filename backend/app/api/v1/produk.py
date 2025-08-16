@@ -73,3 +73,26 @@ def create_product(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Terjadi kesalahan internal"
         )
+
+@router.get("/get-by-id/{produk_id}", response_model=ResponseModel, status_code=status.HTTP_200_OK)
+def get_product_by_id(
+    produk_id: int,
+    db: Session = Depends(get_db)
+):
+    try:
+        data = ProdukService.get_product_by_id(db=db, produk_id=produk_id)
+        return ResponseModel(
+            detail="Detail produk ditemukan",
+            data=data
+        )
+    except NotFoundException as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+    except Exception as e:
+        print(f"Error getting product by id: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Terjadi kesalahan internal"
+        )

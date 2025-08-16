@@ -11,6 +11,7 @@ from app.models.kategori import Kategori
 from app.schemas.produk import ProdukCreate
 from app.exceptions import NotFoundException, DuplicateException
 from typing import List
+from sqlalchemy.orm import joinedload
 
 class ProdukCRUD:
     
@@ -75,3 +76,20 @@ class ProdukCRUD:
             )
 
         return query.all()
+
+    @staticmethod
+    def read_by_id(db: Session, produk_id: int) -> Produk:
+        produk = (
+            db.query(Produk)
+            .options(
+                joinedload(Produk.merek), # Pastikan relasi "merek" ada di model
+                joinedload(Produk.kategori), # Pastikan relasi "kategori" ada di model
+                joinedload(Produk.images)  # Pastikan relasi "images" ada di model
+            )
+            .filter(Produk.produk_id == produk_id)
+            .first()
+        )
+        if not produk:
+            from app.exceptions import NotFoundException
+            raise NotFoundException(f"Produk dengan ID {produk_id} tidak ditemukan")
+        return produk

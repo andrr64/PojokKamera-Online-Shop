@@ -15,7 +15,6 @@ class ProdukCreate(BaseModel):
 
 
 # Response
-
 class ProductCardResponse(BaseModel):
     nama: str
     thumbnail: Optional[str]  # ambil images[0], bisa None kalau ga ada
