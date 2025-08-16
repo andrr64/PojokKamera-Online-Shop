@@ -13,3 +13,8 @@ class KategoriService:
     def get_all_kategori(db: Session) -> list[KategoriResponse]:
         kategori_list = KategoriCRUD.get_all_kategori(db)
         return [KategoriResponse.model_validate(k) for k in kategori_list]
+    
+    
+    @staticmethod
+    def delete_kategori(kategori_id: int, db: Session) -> None:
+        KategoriCRUD.delete_kategori(kategori_id, db)

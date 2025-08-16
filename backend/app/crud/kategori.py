@@ -31,3 +31,13 @@ class KategoriCRUD:
     @staticmethod
     def get_all_kategori(db: Session) -> List[Kategori]:
         return db.query(Kategori).all()
+    
+    @staticmethod
+    def delete_kategori(kategori_id: int, db: Session) -> None:
+        kategori = db.query(Kategori).filter(Kategori.kategori_id == kategori_id).first()
+        if not kategori:
+            from app.exceptions import NotFoundException
+            raise NotFoundException(f"Kategori dengan id {kategori_id} tidak ditemukan")
+        
+        db.delete(kategori)
+        db.commit()
