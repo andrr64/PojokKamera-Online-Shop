@@ -14,16 +14,13 @@ class UserRole:
     def isUser(role: str) -> bool:
         return role == UserRole.USER
 
-# Schema dasar untuk membaca data user
 class UserBase(BaseModel):
     username: str
     email: EmailStr
 
-# Schema untuk input saat create
 class UserCreate(UserBase):
     password: str  
 
-# Schema untuk output/read
 class UserRead(UserBase):
     pengguna_id: int
     peran: str
@@ -31,9 +28,8 @@ class UserRead(UserBase):
     diperbarui_pada: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-# Schema untuk update user
 class UserUpdate(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
@@ -47,3 +43,8 @@ class UserRegister(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
     email: EmailStr
     password: str = Field(..., min_length=8)
+    
+class AdminLogin(BaseModel):
+    username: str
+    password: str
+    
