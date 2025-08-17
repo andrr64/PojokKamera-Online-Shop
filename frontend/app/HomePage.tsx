@@ -8,12 +8,12 @@ import RekomendasiLensaSection from "./components/RekomendasiLensaSection";
 
 export default function Homepage() {
     return (
-        <div className="font-sans min-h-screen flex flex-col">
+        <main className="font-sans min-h-screen flex flex-col">
             <HeroSection />
             <BrandsSection />
             <RekomendasiKameraSection />
             <RekomendasiLensaSection />
             <BestReviewSection />
-        </div>
+        </main>
     );
 }
